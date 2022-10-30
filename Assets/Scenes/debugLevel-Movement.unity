@@ -643,6 +643,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31e6ca699037e554c89c9545e18016d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBody: {fileID: 1489304417}
+  cam: {fileID: 963194227}
+  mouseSensitivity: 100
 --- !u!4 &1489304417
 Transform:
   m_ObjectHideFlags: 0
