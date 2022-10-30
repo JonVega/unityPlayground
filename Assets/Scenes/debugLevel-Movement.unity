@@ -703,7 +703,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1985565856}
   m_Layer: 0
-  m_Name: level
+  m_Name: debugLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -840,7 +840,7 @@ GameObject:
   - component: {fileID: 2092212699}
   - component: {fileID: 2092212698}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
