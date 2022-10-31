@@ -3,15 +3,26 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    /* Action Map */
     private PlayerInputActions playerInputActions;
     private InputAction movement;
     private InputAction jump;
     private InputAction looking;
 
     public Transform playerBody;
+    public Transform playerGroundCheck;
     public Camera cam;
-    public float mouseSensitivity = 80f;
+    public LayerMask groundMask;
+    public CharacterController controller;
+    public float mouseSensitivity = 70f;
     private float xRotation = 0f;
+    public float groundDistance = 0.4f; //radius of sphere going to check to see if on ground
+    public float speed = 12f;
+    public float gravity = -9.81f * 2; //towards 0 = slower fall, further negative = faster fall
+    public float jumpHeight = 1.5f * 1;
+    bool isGrounded;
+
+    Vector3 velocity;
 
     private void Awake() {
         //note: inputAction asset is not static or global
@@ -40,7 +51,7 @@ public class PlayerController : MonoBehaviour
         jump.performed += DoJump; //subscribe to event
     }
 
-    private void FixedUpdate() //use physics engine to move and control player object
+    private void FixedUpdate() //use physics engine
     {
 
     }
@@ -51,7 +62,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private void DoJump(InputAction.CallbackContext obj) {
-        Debug.Log("Jump!");
+        //Debug.Log("Jump!");
+        Debug.Log(isGrounded);
+        if(isGrounded) {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
     }
 
     private void Look() {
@@ -64,6 +79,14 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Move() {
-        Debug.Log("Movement Values: " + movement.ReadValue<Vector2>());
+        //Debug.Log("Movement Values: " + movement.ReadValue<Vector2>());
+        isGrounded = Physics.CheckSphere(playerGroundCheck.position, groundDistance, groundMask);
+        if(isGrounded && velocity.y < 0.0f) {
+            velocity.y = -2f;
+        }
+        Vector3 move = transform.right * movement.ReadValue<Vector2>().x + transform.forward * movement.ReadValue<Vector2>().y;
+        controller.Move(move * speed * Time.deltaTime);
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
     }
 }
