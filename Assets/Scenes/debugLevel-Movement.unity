@@ -835,6 +835,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 360973571958172961, guid: 275c8cb4e3ff1c145a9198d184562ec9, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: K&M
+      objectReference: {fileID: 0}
+    - target: {fileID: 360973571958172961, guid: 275c8cb4e3ff1c145a9198d184562ec9, type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 360973571958172961, guid: 275c8cb4e3ff1c145a9198d184562ec9, type: 3}
+      propertyPath: m_NeverAutoSwitchControlSchemes
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 360973571958172963, guid: 275c8cb4e3ff1c145a9198d184562ec9, type: 3}
       propertyPath: m_RootOrder
       value: 2

@@ -4,9 +4,11 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     /* Action Map */
-    private PlayerInputActions playerInputActions;
+    //private PlayerInputActions playerInputActions;
+    private InputActionAsset inputAsset;
+    private InputActionMap player;
     private InputAction movement;
-    private InputAction jump;
+    //private InputAction jump;
     private InputAction looking;
 
     public Transform playerBody;
@@ -26,29 +28,38 @@ public class PlayerController : MonoBehaviour
 
     private void Awake() {
         //note: inputAction asset is not static or global
-        playerInputActions = new PlayerInputActions();
+        //playerInputActions = new PlayerInputActions();
+        inputAsset = this.GetComponent<PlayerInput>().actions;
+        player = inputAsset.FindActionMap("Player");
     }
 
     private void OnEnable() {
-        movement = playerInputActions.Player.Movement;
-        movement.Enable(); //must call Enable() function or else input action won't work
+        player.FindAction("Jump").started += DoJump;
+        player.Enable();
+        movement = player.FindAction("Movement");
+        looking = player.FindAction("Looking");
+        
+        // movement = playerInputActions.Player.Movement;
+        // movement.Enable(); //must call Enable() function or else input action won't work
 
-        jump = playerInputActions.Player.Jump;
-        jump.Enable();
+        // jump = playerInputActions.Player.Jump;
+        // jump.Enable();
 
-        looking = playerInputActions.Player.MouseDelta;
-        looking.Enable();
+        // looking = playerInputActions.Player.MouseDelta;
+        // looking.Enable();
     }
 
     private void OnDisable() {
-        movement.Disable();
-        jump.Disable();
-        looking.Disable();
+        // movement.Disable();
+        // jump.Disable();
+        // looking.Disable();
+        player.FindAction("Jump").started -= DoJump;
+        player.Disable();
     }
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked; //hides mouse cursor in game
-        jump.performed += DoJump; //subscribe to event
+        //jump.performed += DoJump; //subscribe to event
     }
 
     private void FixedUpdate() //use physics engine
@@ -62,8 +73,6 @@ public class PlayerController : MonoBehaviour
     }
 
     private void DoJump(InputAction.CallbackContext obj) {
-        //Debug.Log("Jump!");
-        Debug.Log(isGrounded);
         if(isGrounded) {
             //formula: v = sqrt(h * -2 * g)
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
