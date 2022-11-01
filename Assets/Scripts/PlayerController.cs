@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Jump!");
         Debug.Log(isGrounded);
         if(isGrounded) {
+            //formula: v = sqrt(h * -2 * g)
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }
